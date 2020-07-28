@@ -42,5 +42,14 @@ export class TestData {
       category: TestData.categories[0],
       date: new Date('2020-06-27')
     },
+
+    {
+      id: 3,
+      title: 'hello',
+      priority: TestData.priorities[0],
+      completed: true,
+      category: TestData.categories[1],
+      date: new Date('2020-07-11')
+    }
   ];
 }
