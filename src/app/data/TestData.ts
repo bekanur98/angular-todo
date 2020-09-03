@@ -48,8 +48,48 @@ export class TestData {
       title: 'hello',
       priority: TestData.priorities[0],
       completed: true,
-      category: TestData.categories[1],
+      category: TestData.categories[2],
       date: new Date('2020-07-11')
-    }
+    },
+    {
+      id: 4,
+      title: 'Выучить ангуляр',
+      priority: null,
+      completed: false,
+      category: null,
+      date: null
+    },
+    {
+      id: 5,
+      title: 'react-native',
+      priority: TestData.priorities[2],
+      completed: false,
+      category: TestData.categories[7],
+      date: new Date('2020-09-11')
+    },
+    {
+      id: 6,
+      title: 'devops',
+      priority: TestData.priorities[4],
+      completed: false,
+      category: TestData.categories[6],
+      date: new Date('2020-08-21')
+    },
+    {
+      id: 7,
+      title: 'Camping',
+      priority: TestData.priorities[1],
+      completed: true,
+      category: TestData.categories[2],
+      date: new Date('2020-09-04')
+    },
+    {
+      id: 8,
+      title: 'Footbal',
+      priority: TestData.priorities[0],
+      completed: false,
+      category: TestData.categories[4],
+      date: new Date('2020-09-6')
+    },
   ];
 }
