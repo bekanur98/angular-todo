@@ -1,10 +1,11 @@
 import {TaskDAO} from '../interfaces/TaskDAO';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Priority} from '../../../model/Priority';
 import {Category} from '../../../model/Category';
-import { Task } from 'src/app/model/Task';
+import {Task} from 'src/app/model/Task';
+import {TestData} from '../../TestData';
 
-export class TaskDAOArray implements TaskDAO{
+export class TaskDAOArray implements TaskDAO {
   add(T): Observable<Task> {
     return undefined;
   }
@@ -14,11 +15,11 @@ export class TaskDAOArray implements TaskDAO{
   }
 
   get(id: number): Observable<Task> {
-    return undefined;
+    return of(TestData.tasks.find(task => task.id === id));
   }
 
-  getAll(): Observable<Task>[] {
-    return [];
+  getAll(): Observable<Task[]> {
+    return of(TestData.tasks);
   }
 
   getCompletedCountInCategory(category: Category): Observable<number> {
@@ -38,7 +39,24 @@ export class TaskDAOArray implements TaskDAO{
   }
 
   search(category: Category, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
-    return undefined;
+    if (category === undefined) {
+      return of(TestData.tasks);
+    }
+    else if (category !== null) {
+      return of(TestData.tasks.filter(tasks => tasks.category === category));
+    }
+
+    // return of(this.searchTasks(category, searchText, status, priority));
+  }
+
+  private searchTasks(category: Category, searchText: string, status: boolean, priority: Priority): Task[] {
+    let allTasks = TestData.tasks;
+
+    if (category != null) {
+      allTasks = allTasks.filter(tasks => tasks.category === category);
+    }
+
+    return allTasks;
   }
 
   update(T): Observable<Task> {

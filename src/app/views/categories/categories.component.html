@@ -11,7 +11,7 @@
     <ul class="nav">
       <li class="nav-item pointer"
         (click)="showTasksByCategory(undefined)"
-          [class.active]="allCategory == true"
+          [class.active]="allCategory ? !this.selectedCategory : true"
       >
         <a class="nav-link">
           <p>Все</p>

@@ -2,8 +2,12 @@ import {Injectable} from '@angular/core';
 import {Category} from '../model/Category';
 import {TestData} from '../data/TestData';
 import {Task} from '../model/Task';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {Test} from 'tslint';
+import {TaskDAOArray} from '../data/dao/implements/TaskDAOArray';
+import {CategoryDAOArray} from '../data/dao/implements/CategoryDAOArray';
+import {PriorityDAOArray} from '../data/dao/implements/PriorityDAOArray';
+import {Priority} from '../model/Priority';
 
 @Injectable({
   providedIn: 'root'
@@ -12,25 +16,26 @@ export class DataHandlerService {
 
   tasksSubject = new BehaviorSubject<Task[]>(TestData.tasks);
   categoriesSubject = new BehaviorSubject<Category[]>(TestData.categories);
+  private taskDaoArray = new TaskDAOArray();
+  private categoryDaoArray = new CategoryDAOArray();
+  private priorityDaoArray = new PriorityDAOArray();
 
   constructor() {
   }
 
-  // getCategories(): Category[] {
-  //   return TestData.categories;
-  // }
-
-  getTasks() {
-    this.tasksSubject.next(TestData.tasks);
+  getAllTasks(): Observable<Task[]> {
+    return this.taskDaoArray.getAll();
   }
 
-  getTasksByCategory(category: Category) {
-    if (category === undefined){
-      this.tasksSubject.next(TestData.tasks);
-    }
-    else {
-      const tasks = TestData.tasks.filter(task => task.category === category);
-      this.tasksSubject.next(tasks);
-    }
+  getAllCategories(): Observable<Category[]> {
+    return this.categoryDaoArray.getAll();
+  }
+
+  getAllPriorities(): Observable<Priority[]> {
+    return this.priorityDaoArray.getAll();
+  }
+
+  searchTasks(category: Category, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
+    return this.taskDaoArray.search(category, searchText, status, priority);
   }
 }
