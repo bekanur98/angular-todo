@@ -61,18 +61,18 @@ export class TestData {
     },
     {
       id: 5,
-      title: 'react-native',
+      title: 'Убраться у себя в комнате',
       priority: TestData.priorities[2],
       completed: false,
-      category: TestData.categories[7],
+      category: TestData.categories[8],
       date: new Date('2020-09-11')
     },
     {
       id: 6,
-      title: 'devops',
+      title: 'Найти билеты в Турцию, выбрать отель',
       priority: TestData.priorities[4],
       completed: false,
-      category: TestData.categories[6],
+      category: TestData.categories[3],
       date: new Date('2020-08-21')
     },
     {
@@ -85,7 +85,7 @@ export class TestData {
     },
     {
       id: 8,
-      title: 'Footbal',
+      title: 'Подтянутся 5000 раз',
       priority: TestData.priorities[0],
       completed: false,
       category: TestData.categories[4],
