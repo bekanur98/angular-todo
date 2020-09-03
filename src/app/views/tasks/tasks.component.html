@@ -22,7 +22,11 @@
       <!--      название задачи-->
       <ng-container matColumnDef="title">
         <th *matHeaderCellDef mat-header-cell mat-sort-header> Название </th>
-        <td class="col-title" *matCellDef="let task" [class.completed]="task.completed" mat-cell>
+        <td
+          *matCellDef="let task"
+          [class.completed]="task.completed" class="col-title on-point" mat-cell
+          (click)="onClickTask(task)"
+        >
           {{ task.title }}
         </td>
       </ng-container>
