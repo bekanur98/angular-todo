@@ -94,18 +94,20 @@ export class TasksComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  onClickTask(task: Task) {
-    this.updateTask.emit(task);
-  }
-
   openEditTaskDialog(task: Task) {
 
     const dialogRef = this.dialog.open(EditTaskDialogComponent, {
       data: [task, 'Редактирование задачи'],
-      autoFocus: false
+      autoFocus: false,
+      maxWidth: '40%'
     });
 
-    dialogRef.afterClosed().subscribe();
+    dialogRef.afterClosed().subscribe(result => {
+      if (result as Task) {
+        this.updateTask.emit(task);
+        return;
+      }
+    });
   }
 
 }
