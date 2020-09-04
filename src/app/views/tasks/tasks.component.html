@@ -25,7 +25,7 @@
         <td
           *matCellDef="let task"
           [class.completed]="task.completed" class="col-title on-point" mat-cell
-          (click)="onClickTask(task)"
+          (click)="openEditTaskDialog(task)"
         >
           {{ task.title }}
         </td>
