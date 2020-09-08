@@ -38,7 +38,6 @@ export class TasksComponent implements OnInit {
   ngOnInit(): void {
 
     this.dataSource = new MatTableDataSource();
-
     this.fillTable();
   }
 
