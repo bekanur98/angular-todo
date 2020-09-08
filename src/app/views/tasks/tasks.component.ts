@@ -105,6 +105,17 @@ export class TasksComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+
+      if (result === 'activate'){
+        this.updateTask.emit(task);
+        return;
+      }
+
+      if (result === 'complete'){
+        this.updateTask.emit(task);
+        return;
+      }
+
       if (result === 'delete') {
         this.deleteTask.emit(task);
         return;

@@ -28,6 +28,8 @@ export class EditTaskDialogComponent implements OnInit {
   tmpTitle: string;
   tmpCategory: Category;
   tmpPriority: Priority;
+  tmpCompleted: boolean;
+  completedText: string;
 
   ngOnInit() {
     this.task = this.data[0];
@@ -35,6 +37,14 @@ export class EditTaskDialogComponent implements OnInit {
     this.tmpTitle = this.task.title;
     this.tmpCategory = this.task.category;
     this.tmpPriority = this.task.priority;
+    this.tmpCompleted = this.task.completed;
+
+    if (this.task.completed) {
+      this.completedText = 'Активировать';
+    }
+    else {
+      this.completedText = 'Завершить';
+    }
 
     this.dataHandler.getAllCategories().subscribe(items => this.categories = items);
     this.dataHandler.getAllPriorities().subscribe(items => this.priorities = items);
@@ -52,9 +62,21 @@ export class EditTaskDialogComponent implements OnInit {
     this.dialogRef.close(null);
   }
 
-  delete() {
+  onComplete() {
+    this.task.completed = !this.tmpCompleted;
+    if (this.task.completed) {
+      this.dialogRef.close('complete');
+      this.completedText = 'Активировать';
+    }
+    else {
+      this.dialogRef.close('activate');
+      this.completedText = 'Завершить';
+    }
+  }
+
+  onDelete() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      maxWidth: '500px',
+      maxWidth: '700px',
       data: {
         dialogTitle: 'Подтвердите действие',
         message: `Вы действительно хотите удалить задачу "${this.task.title}" ?`
