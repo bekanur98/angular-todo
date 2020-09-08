@@ -30,6 +30,7 @@ export class EditTaskDialogComponent implements OnInit {
   tmpPriority: Priority;
   tmpCompleted: boolean;
   completedText: string;
+  tmpDate: Date;
 
   ngOnInit() {
     this.task = this.data[0];
@@ -38,6 +39,7 @@ export class EditTaskDialogComponent implements OnInit {
     this.tmpCategory = this.task.category;
     this.tmpPriority = this.task.priority;
     this.tmpCompleted = this.task.completed;
+    this.tmpDate = this.task.date;
 
     if (this.task.completed) {
       this.completedText = 'Активировать';
@@ -54,7 +56,7 @@ export class EditTaskDialogComponent implements OnInit {
     this.task.title = this.tmpTitle;
     this.task.category = this.tmpCategory;
     this.task.priority = this.tmpPriority;
-
+    this.task.date = this.tmpDate;
     this.dialogRef.close(this.task);
   }
 
