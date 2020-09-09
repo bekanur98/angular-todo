@@ -14,7 +14,7 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class TasksComponent implements OnInit {
 
-  displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category'];
+  displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category', 'actions'];
   dataSource: MatTableDataSource<Task>;
 
   // links to table
