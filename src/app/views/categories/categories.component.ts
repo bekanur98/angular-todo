@@ -31,7 +31,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.showTasksByCategory(undefined);
+
   }
 
   showTasksByCategory(category: Category) {

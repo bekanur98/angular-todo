@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Task} from './model/Task';
 import {DataHandlerService} from './service/data-handler.service';
 import {Category} from './model/Category';
+import {Priority} from './model/Priority';
 
 @Component({
   selector: 'app-root',
@@ -12,33 +13,27 @@ export class AppComponent implements OnInit {
   title = 'todo';
   tasks: Task[];
   categories: Category[];
+  priorities: Priority[];
   selectedCategory: Category = null;
+  searchTaskText = '';
+  statusFilter: boolean;
+  priorityFilter: Priority = null;
 
   constructor(private dataHandler: DataHandlerService) {
   }
 
   ngOnInit(): void {
     this.dataHandler.getAllCategories().subscribe(categories => this.categories = categories);
+    this.dataHandler.getAllPriorities().subscribe(priorities => this.priorities = priorities);
     this.onSelectCategory(null); // show all task
   }
 
   onSelectCategory(category: Category) {
 
-    if (!category) {
-      this.dataHandler.getAllTasks().subscribe(task => this.tasks = task);
-      return;
-    }
-
     this.selectedCategory = category;
 
-    this.dataHandler.searchTasks(
-      this.selectedCategory,
-      null,
-      null,
-      null
-    ).subscribe(tasks => {
-      this.tasks = tasks;
-    });
+
+    this.updateTasks();
 
   }
 
@@ -84,5 +79,29 @@ export class AppComponent implements OnInit {
     });
   }
 
+  onFilterTasksByStatus(status: boolean) {
+    this.statusFilter = status;
+    this.updateTasks();
+  }
 
+  onSearchTasks(searchingString: string) {
+    this.searchTaskText = searchingString;
+    this.updateTasks();
+  }
+
+  onFilterTasksByPriorities(priority: Priority) {
+    this.priorityFilter = priority;
+    this.updateTasks();
+  }
+
+  updateTasks() {
+    this.dataHandler.searchTasks(
+      this.selectedCategory,
+      this.searchTaskText,
+      this.statusFilter,
+      this.priorityFilter
+    ).subscribe((tasks: Task[]) => {
+      this.tasks = tasks;
+    });
+  }
 }
