@@ -6,6 +6,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {EditTaskDialogComponent} from '../../data/dialog/edit-task-dialog/edit-task-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {ConfirmDialogComponent} from '../../data/dialog/confirm-dialog/confirm-dialog.component';
+import {Category} from '../../model/Category';
 
 @Component({
   selector: 'app-tasks',
@@ -14,7 +16,7 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class TasksComponent implements OnInit {
 
-  displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category', 'actions'];
+  displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category', 'operations', 'select'];
   dataSource: MatTableDataSource<Task>;
 
   // links to table
@@ -35,6 +37,9 @@ export class TasksComponent implements OnInit {
   @Output()
   deleteTask = new EventEmitter<Task>();
 
+  @Output()
+  selectCategory = new EventEmitter<Category>();
+
   constructor(private dataHandler: DataHandlerService, private dialog: MatDialog) {
   }
 
@@ -42,11 +47,6 @@ export class TasksComponent implements OnInit {
 
     this.dataSource = new MatTableDataSource();
     this.fillTable();
-  }
-
-
-  toggleTaskCompleted(task: Task) {
-    task.completed = !task.completed;
   }
 
   getPriorityColor(task: Task): string {
@@ -96,6 +96,31 @@ export class TasksComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  onSelectCategory(category: Category) {
+    this.selectCategory.emit(category);
+  }
+
+  openDeleteDialog(task: Task) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        dialogTitle: 'Подтвердите действие',
+        message: `Вы действительно хотите удалить задачу "${task.title}" ?`
+      },
+      autoFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteTask.emit(task);
+      }
+    });
+  }
+
+  onToggleStatus(task: Task) {
+    task.completed = !task.completed;
+    this.updateTask.emit(task);
+  }
+
   openEditTaskDialog(task: Task) {
 
     const dialogRef = this.dialog.open(EditTaskDialogComponent, {
@@ -105,12 +130,12 @@ export class TasksComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
 
-      if (result === 'activate'){
+      if (result === 'activate') {
         this.updateTask.emit(task);
         return;
       }
 
-      if (result === 'complete'){
+      if (result === 'complete') {
         this.updateTask.emit(task);
         return;
       }

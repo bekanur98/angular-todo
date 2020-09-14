@@ -10,8 +10,8 @@
   <div class="sidebar-wrapper">
     <ul class="nav">
       <li class="nav-item pointer"
-        (click)="showTasksByCategory(undefined)"
-          [class.active]="allCategory ? !this.selectedCategory : true"
+        (click)="showTasksByCategory(null)"
+          [class.active]="selectedCategory === null"
       >
         <a class="nav-link">
           <p>Все</p>

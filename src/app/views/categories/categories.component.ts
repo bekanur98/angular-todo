@@ -13,13 +13,13 @@ export class CategoriesComponent implements OnInit {
   @Input()
   categories: Category[];
 
+  @Input()
+  selectedCategory: Category;
+
   @Output()
   selectCategory = new EventEmitter<Category>();
 
-  selectedCategory: Category;
-
   constructor(private dataHandler: DataHandlerService) {
-    this.allCategory = true;
   }
 
   ngOnInit(): void {
