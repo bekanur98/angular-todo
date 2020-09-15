@@ -104,4 +104,10 @@ export class AppComponent implements OnInit {
       this.tasks = tasks;
     });
   }
+
+  onAddTask(task: Task) {
+    this.dataHandler.addTask(task).subscribe(result => {
+      this.updateTasks();
+    });
+  }
 }
